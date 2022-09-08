@@ -5,7 +5,7 @@ pipeline {
         stages {
             stage('Source') {
                 steps {
-                    git url: 'https://github.com/shanthshivam/sample-java-maven.git'
+                    git url: 'https://github.com/SaiPriya232/repository2.git'
                 }
             }
             stage('Build') {
@@ -21,7 +21,7 @@ pipeline {
                     script {
                         def mvnHome = tool 'M3'
                         withSonarQubeEnv() {
-                            bat "${mvnHome}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=java-maven"
+                            bat "${mvnHome}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=demo1"
                         }
                     }
                 }
@@ -44,7 +44,7 @@ pipeline {
                             def server = Artifactory.server 'artifactory'
                             def rtMaven = Artifactory.newMavenBuild()
                             //rtMaven.resolver server: server, releaseRepo: 'jenkins-devops', snapshotRepo: 'jenkins-devops-snapshot'
-                            rtMaven.deployer server: server, releaseRepo: 'jenkins-devops', snapshotRepo: 'jenkins-devops-snapshot'
+                            rtMaven.deployer server: server, releaseRepo: 'artifactory1', snapshotRepo: 'artifactory2'
                             rtMaven.tool = 'M3'
                             
                             def buildInfo = rtMaven.run pom: '$workspace/pom.xml', goals: 'clean install'
